@@ -1,0 +1,28 @@
+application: qmacro-contextual
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /manifests
+  static_dir: manifests
+  expiration: 1m
+
+- url: /gadgets
+  static_dir: gadgets
+  expiration: 1m
+
+- url: /css
+  static_dir: css
+
+- url: .*
+  script: main.py
+
+skip_files:
+- ^(.*/)?\.git.*
+- ^(.*/)?app\.yaml
+- ^(.*/)?index\.yaml
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?\..*
+- ^(.*/)?.*\.backup
+

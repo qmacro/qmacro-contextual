@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ApplicationManifest xmlns="http://schemas.google.com/ApplicationManifest/2009">
+
+  <!-- Support info to show in the marketplace & control panel -->
+  <Support>
+    <!-- URL for application configuration, accessed from the app settings
+     page in the control panel -->
+    <Link rel="manage" href="http://qmacro-contextual.appspot.com/twitter-user-info/admin?domain=${DOMAIN_NAME}" />
+
+    <!-- URL explaining how customers get support. -->
+    <Link rel="support" href="http://qmacro-contextual.appspot.com/twitter-user-info/support" />
+
+    <!-- URL that is displayed to admins during the deletion process,
+     to specify policies such as data retention, how to claim accounts, etc. -->
+    <Link rel="deletion-policy" href="http://qmacro-contextual.appspot.com/twitter-user-info/deletion-policy" />
+  </Support>
+
+  <!-- Name and description pulled from message bundles -->
+  <Name>Gmail Contextual Twitter User Info</Name>
+  <Description>Simple Twitter User Info application for testing Gmail contextual gadgets</Description>
+
+  <!-- Show this link in Google's universal navigation for all users -->
+  <!--
+  <Extension id="navLink" type="link">
+    <Name>GmailTwitterUserInfo1</Name>
+    <Url>http://test.pipetree.com/home.php?from=google&amp;domain=${DOMAIN_NAME}</Url>
+  </Extension>
+  -->
+
+  <!-- Declare our OpenID realm so our app is white listed -->
+  <Extension id="realm" type="openIdRealm">
+    <Url>http://qmacro-contextual.appspot.com</Url>
+  </Extension>
+
+<!-- EXTRACTOR -->
+<Extension id="SubjectExtractor" type="contextExtractor">
+  <Name>Twitter IDs in Subject</Name>
+  <Url>google.com:SubjectExtractor</Url>
+  <!--<Param name="subject" value="@[a-z]+"/>-->
+  <Triggers ref="TwitterUserInfoGadget"/>
+  <Scope ref="emailSubject"/>
+  <Container name="mail"/>
+</Extension>
+
+<!-- GADGET -->
+<Extension id="TwitterUserInfoGadget" type="gadget">
+  <Name>Twitter User Info contextual gadget</Name>
+  <Url>http://qmacro-contextual.appspot.com/gadgets/twitter-user-info.gadget.xml</Url>
+  <Container name="mail"/>
+</Extension>
+
+<!-- SCOPE -->
+<Scope id="emailSubject">
+  <Url>tag:google.com,2010:auth/contextual/extractor/SUBJECT</Url>
+  <Reason>This application looks at the subject of each email looking for Twitter handles</Reason>
+</Scope>
+
+</ApplicationManifest>
+

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ApplicationManifest xmlns="http://schemas.google.com/ApplicationManifest/2009">
+
+  <!-- Support info to show in the marketplace & control panel -->
+  <Support>
+    <!-- URL for application configuration, accessed from the app settings
+     page in the control panel -->
+    <Link rel="manage" href="http://qmacro-contextual.appspot.com/extractor-test/admin?domain=${DOMAIN_NAME}" />
+
+    <!-- URL explaining how customers get support. -->
+    <Link rel="support" href="http://qmacro-contextual.appspot.com/extractor-test/support" />
+
+    <!-- URL that is displayed to admins during the deletion process,
+     to specify policies such as data retention, how to claim accounts, etc. -->
+    <Link rel="deletion-policy" href="http://qmacro-contextual.appspot.com/extractor-test/deletion-policy" />
+  </Support>
+
+  <!-- Name and description pulled from message bundles -->
+  <Name>Gmail Contextual Extractor Test</Name>
+  <Description>Extractor test for testing Gmail contextual gadgets</Description>
+
+  <!-- Declare our OpenID realm so our app is white listed -->
+  <Extension id="realm" type="openIdRealm">
+    <Url>http://qmacro-contextual.appspot.com</Url>
+  </Extension>
+
+<!-- EXTRACTORS -->
+<Extension id="SenderEmailExtractor" type="contextExtractor">
+  <Name>Sender email extractor</Name>
+  <Url>google.com:SenderEmailExtractor</Url>
+  <Param name="sender_email" value=".*"/>
+  <Triggers ref="ExtractorTestGadget"/>
+  <Scope ref="fromAddress"/>
+  <Container name="mail"/>
+</Extension>
+<Extension id="EmailBodyExtractor" type="contextExtractor">
+  <Name>Email body extractor</Name>
+  <Url>google.com:EmailBodyExtractor</Url>
+  <Param name="email_body" value=".*"/>
+  <Triggers ref="ExtractorTestGadget"/>
+  <Scope ref="body"/>
+  <Container name="mail"/>
+</Extension>
+<Extension id="RecipientEmailExtractor" type="contextExtractor">
+  <Name>Recipient email extractor</Name>
+  <Url>google.com:RecipientEmailExtractor</Url>
+  <Param name="recipient_email" value=".*"/>
+  <Triggers ref="ExtractorTestGadget"/>
+  <Scope ref="toAddress"/>
+  <Scope ref="ccEmail"/>
+  <Container name="mail"/>
+</Extension>
+
+
+<!-- GADGET -->
+<Extension id="ExtractorTestGadget" type="gadget">
+  <Name>Twitter User Info contextual gadget</Name>
+  <Url>http://qmacro-contextual.appspot.com/gadgets/extractor-test.gadget.xml</Url>
+  <Container name="mail"/>
+  <!--<Param name="caja" value="enabled" />-->
+</Extension>
+
+<!-- SCOPES -->
+<Scope id="fromAddress">
+  <Url>tag:google.com,2010:auth/contextual/extractor/FROM_ADDRESS</Url>
+  <Reason>Looks at the FROM ADDRESS</Reason>
+</Scope>
+<Scope id="body">
+  <Url>tag:google.com,2010:auth/contextual/extractor/BODY</Url>
+  <Reason>Looks at the BODY</Reason>
+</Scope>
+<Scope id="toAddress">
+  <Url>tag:google.com,2010:auth/contextual/extractor/TO_ADDRESS</Url>
+  <Reason>Looks at the TO ADDRESS</Reason>
+</Scope>
+<Scope id="ccEmail">
+  <Url>tag:google.com,2010:auth/contextual/extractor/CC_EMAIL</Url>
+  <Reason>Looks at the CC EMAIL</Reason>
+</Scope>
+
+</ApplicationManifest>
+

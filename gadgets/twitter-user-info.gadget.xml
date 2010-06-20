@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <ModulePrefs title="Twitter"
+    description="User Info"
+    height="50"
+    author="DJ Adams"
+    author_email="dj.adams@pobox.com"
+    author_location="Manchester">
+
+    <!-- Declare feature dependencies. -->
+
+    <!-- This one is not specific to Gmail contextual gadgets. -->
+    <Require feature="dynamic-height"/>
+
+    <!-- The next feature, Caja, is optional, and is supported for
+     use only within test domains. Uncomment the tag only for
+     non-production gadgets. -->
+    <!-- <Require feature="caja"/> -->
+
+    <!-- The next feature, google.contentmatch, is required for all
+     Gmail contextual gadgets.
+     <Param> - specify one or more comma-separated extractor IDs in
+     a param named "extractors". This line is overridden by the extractor ID
+     in the manifest, but is still expected to be present. -->
+    <Require feature="google.contentmatch">
+      <Param name="extractors">
+        google.com:SubjectExtractor
+      </Param>
+    </Require>
+
+  </ModulePrefs>
+
+  <!-- Define the content type and display location. The settings
+   "html" and "card" are required for all Gmail contextual gadgets. -->
+  <Content type="html" view="card">
+    <![CDATA[
+      <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>
+      <script type="text/javascript">
+
+        // Expect subject as first element keyed by 'subject'
+        matches = google.contentmatch.getContentMatches();
+        jQuery.post('http://www.postbin.org/1jd620g', 'matches:' + JSON.stringify(matches));
+        var subject = matches[0]['subject'];
+
+        // Only do something if we actually have a subject to work with
+        if (subject) {
+
+          // Pick out the twitter @handles and process them
+          var handles = subject.match(/@[a-z0-9_]+/g);
+
+          if (handles) {
+            $('head').append('<link rel="stylesheet" href="http://qmacro-contextual.appspot.com/css/twitter-user-info.css" />');
+            for (var i = 0; i < handles.length; i++) {
+              var user_resource = 'http://api.twitter.com/users/show/' + handles[i] + '.json?callback=?';
+              $.getJSON(user_resource, function(data) {
+                jQuery.post('http://www.postbin.org/1jd620g', 'userinfo:' + JSON.stringify(data));
+                var loc = "";
+                if (data.location) { 
+                  loc = ' (' + data.location + ')';
+                }
+                var tw_info = '<table border="0">' + '<tr>' + '<td>' + '<a href="' + data.url + '">' + '<img src="' + data.profile_image_url + '" />' + '</a>' + '</td>' + '<td class="userinfo">' + '<a href="http://twitter.com/' + data.screen_name + '">@' + data.screen_name + '</a>' + '<br />' + data.name + loc + '<br />' + data.description + '</td>' + '</tr></table>';
+                jQuery(tw_info).appendTo('body');
+                jQuery.post('http://qmacro.appspot.com/logger', 'log=' + data.screen_name);
+              });
+            }
+            gadgets.window.adjustHeight(100);
+          }
+        }
+          
+      </script>
+    ]]>
+  </Content>
+</Module>
+

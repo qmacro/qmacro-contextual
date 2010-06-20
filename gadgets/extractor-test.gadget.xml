@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <ModulePrefs title="Extractor"
+    description="Test"
+    height="25"
+    author="DJ Adams"
+    author_email="dj.adams@pobox.com"
+    author_location="Manchester">
+
+    <!-- Declare feature dependencies. -->
+
+    <!-- This one is not specific to Gmail contextual gadgets. -->
+    <Require feature="dynamic-height"/>
+
+    <!-- The next feature, Caja, is optional, and is supported for
+     use only within test domains. Uncomment the tag only for
+     non-production gadgets. -->
+    <!--<Require feature="caja"/>-->
+
+    <!-- The next feature, google.contentmatch, is required for all
+     Gmail contextual gadgets.
+     <Param> - specify one or more comma-separated extractor IDs in
+     a param named "extractors". This line is overridden by the extractor ID
+     in the manifest, but is still expected to be present. -->
+    <Require feature="google.contentmatch">
+      <Param name="extractors">
+        google.com:SenderEmailExtractor,google.com:EmailBodyExtractor,google.com:RecipientEmailExtractor
+      </Param>
+    </Require>
+
+  </ModulePrefs>
+
+  <!-- Define the content type and display location. The settings
+   "html" and "card" are required for all Gmail contextual gadgets. -->
+  <Content type="html" view="card">
+    <![CDATA[
+      <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>
+      <script type="text/javascript">
+
+        matches = google.contentmatch.getContentMatches();
+        jQuery.post('http://www.postbin.org/1jd620g', JSON.stringify(matches));
+        jQuery('<div>BOK</div>').appendTo('body');
+        gadgets.window.adjustHeight(100);
+          
+      </script>
+    ]]>
+  </Content>
+</Module>
+
