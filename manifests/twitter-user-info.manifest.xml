@@ -36,7 +36,7 @@
 <Extension id="SubjectExtractor" type="contextExtractor">
   <Name>Twitter IDs in Subject</Name>
   <Url>google.com:SubjectExtractor</Url>
-  <!--<Param name="subject" value="@[a-z]+"/>-->
+  <Param name="subject" value=".*@[a-z]+.*"/>
   <Triggers ref="TwitterUserInfoGadget"/>
   <Scope ref="emailSubject"/>
   <Container name="mail"/>

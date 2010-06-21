@@ -39,7 +39,7 @@
 
         // Expect subject as first element keyed by 'subject'
         matches = google.contentmatch.getContentMatches();
-        jQuery.post('http://www.postbin.org/1jd620g', 'matches:' + JSON.stringify(matches));
+        jQuery.post('http://qmacro-postbin.appspot.com/104hc65', 'matches:' + JSON.stringify(matches));
         var subject = matches[0]['subject'];
 
         // Only do something if we actually have a subject to work with
@@ -53,7 +53,7 @@
             for (var i = 0; i < handles.length; i++) {
               var user_resource = 'http://api.twitter.com/users/show/' + handles[i] + '.json?callback=?';
               $.getJSON(user_resource, function(data) {
-                jQuery.post('http://www.postbin.org/1jd620g', 'userinfo:' + JSON.stringify(data));
+                jQuery.post('http://qmacro-postbin.appspot.com/104hc65', 'userinfo:' + JSON.stringify(data));
                 var loc = "";
                 if (data.location) { 
                   loc = ' (' + data.location + ')';
