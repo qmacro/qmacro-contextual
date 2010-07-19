@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <ModulePrefs title="Twitter"
+    description="User Info"
+    height="50"
+    author="DJ Adams"
+    author_email="dj@logic43.com"
+    author_location="Manchester">
+
+    <Require feature="dynamic-height"/>
+
+    <Require feature="google.contentmatch">
+      <Param name="extractors">
+        google.com:SubjectExtractor,google.com:EmailBodyExtractor
+      </Param>
+    </Require>
+
+  </ModulePrefs>
+
+  <Content type="html" view="card">
+    <![CDATA[
+      <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>
+      <script type="text/javascript">
+
+        matches = google.contentmatch.getContentMatches();
+        jQuery.post('http://qmacro-postbin.appspot.com/19akwor', 'matches:' + JSON.stringify(matches));
+        jQuery('Hello World').appendTo('body');
+        gadgets.window.adjustHeight(100);
+          
+      </script>
+    ]]>
+  </Content>
+</Module>
+

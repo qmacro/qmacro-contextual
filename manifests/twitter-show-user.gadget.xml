@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ApplicationManifest xmlns="http://schemas.google.com/ApplicationManifest/2009">
+
+  <Support>
+    <Link rel="manage" href="http://qmacro-contextual.logic43.com/twitter-show-user/admin?domain=${DOMAIN_NAME}" />
+    <Link rel="support" href="http://qmacro-contextual.logic43.com/twitter-show-user/support" />
+    <Link rel="deletion-policy" href="http://qmacro-contextual.logic43.com/twitter-show-user/deletion-policy" />
+  </Support>
+
+  <Name>Twitter User Info</Name>
+  <Description>Recognises Twitter IDs and displays Twitter user info for them</Description>
+
+  <Extension id="realm" type="openIdRealm">
+    <Url>http://qmacro-contextual.logic43.com</Url>
+  </Extension>
+
+  <!-- EXTRACTOR -->
+  <Extension id="SubjectExtractor" type="contextExtractor">
+    <Name>Twitter IDs in Subject</Name>
+    <Url>google.com:SubjectExtractor</Url>
+    <Param name="subject" value=".*@[a-z]+.*"/>
+    <Triggers ref="TwitterShowUserGadget"/>
+    <Scope ref="emailSubject"/>
+    <Container name="mail"/>
+  </Extension>
+  <Extension id="EmailBodyExtractor" type="contextExtractor">
+    <Name>Twitter IDs in body</Name>
+    <Url>google.com:EmailBodyExtractor</Url>
+    <Param name="email_body" value=".*@[a-z]+.*"/>
+    <Triggers ref="TwitterShowUserGadget"/>
+    <Scope ref="body"/>
+    <Container name="mail"/>
+  </Extension>
+  
+  <!-- GADGET -->
+  <Extension id="TwitterUserInfoGadget" type="gadget">
+    <Name>Twitter User Info contextual gadget</Name>
+    <Url>http://qmacro-contextual.logic43.com/gadgets/twitter-show-user.gadget.xml</Url>
+    <Container name="mail"/>
+  </Extension>
+  
+  <!-- SCOPE -->
+  <Scope id="emailSubject">
+    <Url>tag:google.com,2010:auth/contextual/extractor/SUBJECT</Url>
+    <Reason>Searches the subject of each email for Twitter IDs</Reason>
+  </Scope>
+  <Scope id="body">
+    <Url>tag:google.com,2010:auth/contextual/extractor/BODY</Url>
+    <Reason>Searches the body of each email for Twitter IDs</Reason>
+  </Scope>
+
+</ApplicationManifest>
+
