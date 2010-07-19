@@ -33,7 +33,7 @@
   </Extension>
   
   <!-- GADGET -->
-  <Extension id="TwitterUserInfoGadget" type="gadget">
+  <Extension id="TwitterShowUserGadget" type="gadget">
     <Name>Twitter User Info contextual gadget</Name>
     <Url>http://qmacro-contextual.logic43.com/gadgets/twitter-show-user.gadget.xml</Url>
     <Container name="mail"/>
