@@ -42,11 +42,11 @@
   <!-- SCOPE -->
   <Scope id="emailSubject">
     <Url>tag:google.com,2010:auth/contextual/extractor/SUBJECT</Url>
-    <Reason>Searches the subject of each email for Twitter IDs</Reason>
+    <Reason>Searches the email subject for Twitter IDs</Reason>
   </Scope>
   <Scope id="body">
     <Url>tag:google.com,2010:auth/contextual/extractor/BODY</Url>
-    <Reason>Searches the body of each email for Twitter IDs</Reason>
+    <Reason>Searches the email body for Twitter IDs</Reason>
   </Scope>
 
 </ApplicationManifest>

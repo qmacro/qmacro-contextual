@@ -8,7 +8,7 @@ class MainHandler(webapp.RequestHandler):
     <html><body>
     <h1>qmacro-contextual</h1>
     <p>
-    This app hosts Gmail contextual gadget resources. See the blog post
+    This app hosts <strong>Gmail contextual gadget</strong> resources. See the blog post
     <a href='http://www.pipetree.com/qmacro/blog/2010/06/getting-started-with-gmail-contextual-gadgets/'>Getting Started with Gmail Contextual Gadgets</a> and <a href='http://github.com/qmacro/qmacro-contextual'>this project on Github</a>.
     </p>
     </body></html>
