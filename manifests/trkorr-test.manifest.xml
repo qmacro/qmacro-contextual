@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ApplicationManifest xmlns="http://schemas.google.com/ApplicationManifest/2009">
+
+  <!-- Support info to show in the marketplace & control panel -->
+  <Support>
+    <!-- URL for application configuration, accessed from the app settings
+     page in the control panel -->
+    <Link rel="manage" href="http://qmacro-contextual.appspot.com/trkorr-test/admin?domain=${DOMAIN_NAME}" />
+
+    <!-- URL explaining how customers get support. -->
+    <Link rel="support" href="http://qmacro-contextual.appspot.com/trkorr-test/support" />
+
+    <!-- URL that is displayed to admins during the deletion process,
+     to specify policies such as data retention, how to claim accounts, etc. -->
+    <Link rel="deletion-policy" href="http://qmacro-contextual.appspot.com/trkorr-test/deletion-policy" />
+  </Support>
+
+  <!-- Name and description pulled from message bundles -->
+  <Name>Gmail Contextual TRKORR Test</Name>
+  <Description>TRKORR Test gadget</Description>
+
+  <!-- Declare our OpenID realm so our app is white listed -->
+  <Extension id="realm" type="openIdRealm">
+    <Url>http://qmacro-contextual.appspot.com</Url>
+  </Extension>
+
+<!-- EXTRACTOR -->
+<Extension id="SubjectExtractor" type="contextExtractor">
+  <Name>TRKORRs in Subject</Name>
+  <Url>google.com:SubjectExtractor</Url>
+  <Param name="subject" value=".*NSPK[0-9]+.*"/>
+  <Triggers ref="TrkorrTestGadget"/>
+  <Scope ref="emailSubject"/>
+  <Container name="mail"/>
+</Extension>
+
+<!-- GADGET -->
+<Extension id="TrkorrTestGadget" type="gadget">
+  <Name>TRKORR Test contextual gadget</Name>
+  <Url>http://qmacro-contextual.appspot.com/gadgets/trkorr-test.gadget.xml</Url>
+  <Container name="mail"/>
+</Extension>
+
+<!-- SCOPE -->
+<Scope id="emailSubject">
+  <Url>tag:google.com,2010:auth/contextual/extractor/SUBJECT</Url>
+  <Reason>This application looks at the subject of each email</Reason>
+</Scope>
+
+</ApplicationManifest>
+

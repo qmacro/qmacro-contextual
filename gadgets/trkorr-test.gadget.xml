@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <ModulePrefs title="TRKORR"
+    description="Test Info"
+    height="50"
+    author="DJ Adams"
+    author_email="dj.adams@pobox.com"
+    author_location="Manchester">
+
+    <!-- Declare feature dependencies. -->
+
+    <!-- This one is not specific to Gmail contextual gadgets. -->
+    <Require feature="dynamic-height"/>
+
+    <!-- The next feature, Caja, is optional, and is supported for
+     use only within test domains. Uncomment the tag only for
+     non-production gadgets. -->
+    <!-- <Require feature="caja"/> -->
+
+    <!-- The next feature, google.contentmatch, is required for all
+     Gmail contextual gadgets.
+     <Param> - specify one or more comma-separated extractor IDs in
+     a param named "extractors". This line is overridden by the extractor ID
+     in the manifest, but is still expected to be present. -->
+    <Require feature="google.contentmatch">
+      <Param name="extractors">
+        google.com:SubjectExtractor
+      </Param>
+    </Require>
+
+  </ModulePrefs>
+
+  <!-- Define the content type and display location. The settings
+   "html" and "card" are required for all Gmail contextual gadgets. -->
+  <Content type="html" view="card">
+    <![CDATA[
+      <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>
+      <script type="text/javascript">
+
+      $(document).ready(function() {
+
+        // Expect subject as first element keyed by 'subject'
+        matches = google.contentmatch.getContentMatches();
+        console.log('matches:' + JSON.stringify(matches));
+        var subject = matches[0]['subject'];
+
+        // Only do something if we actually have a subject to work with
+        if (subject) {
+
+          var params = {};
+          params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+          params[gadgets.io.RequestParameters.AUTHORIZATION] = gadgets.io.AuthorizationType.SIGNED;
+
+          console.log('Processing subject: ' + subject);
+
+          // Pick out the TRKORRs and process them
+          var trkorrs = subject.match(/NSPK[0-9_]+/g);
+
+          console.log('trkorrs: ' + trkorrs);
+
+          var trinfo = '';
+
+          if (trkorrs) {
+
+            console.log('Processing trkorrs ...');
+        
+            $('head').append('<link rel="stylesheet" href="http://qmacro-contextual.appspot.com/css/trkorr-test.css" />');
+
+            for (var i = 0; i < trkorrs.length; i++) {
+
+              console.log("trkorr " + i + ": " + trkorrs[i] + "!");
+
+              var params = {};
+              params['AUTHORIZATION'] = 'SIGNED'
+              //params['OAUTH_ADD_EMAIL'] = 'true'
+              params['OAUTH_ENABLE_PRIVATE_NETWORK'] = 'true'
+
+              var url = "http://vmwxp07:8000/qmacro/sitbru/trkorr/" + trkorrs[i] + "/";
+
+              console.log("Making request...");
+              gadgets.io.makeRequest(url, showTrkorrInfo, params);
+              console.log("Finished request");
+
+
+            }
+
+            console.log("Out of loop");
+
+            gadgets.window.adjustHeight(200);
+          }
+        }
+          
+      });
+          
+      function showTrkorrInfo(response) {
+        var d = eval( '(' + response.text + ')' );
+        console.log("Response received for " + d.data.TRKORR);
+
+        var trinfo = '<p class="trinfo"><strong>' + d.data.TRKORR + '</strong>' +
+                     '&nbsp;(' + d.data.AS4USER + ')&nbsp;' + d.data.AS4TEXT + '</p>';
+
+        jQuery(trinfo).appendTo('body');
+      }
+
+      </script>
+    ]]>
+  </Content>
+</Module>
+
