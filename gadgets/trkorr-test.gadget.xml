@@ -71,6 +71,7 @@
               //params['OAUTH_ADD_EMAIL'] = 'true'
               params['OAUTH_ENABLE_PRIVATE_NETWORK'] = 'true'
 
+              // Merci, Google Secure Data Connector!
               var url = "http://vmwxp07:8000/qmacro/sitbru/trkorr/" + trkorrs[i] + "/";
 
               console.log("Making request...");
