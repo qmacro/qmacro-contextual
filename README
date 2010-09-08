@@ -1,0 +1,7 @@
+qmacro-contextual
+
+A Google App Engine app for serving Gmail Contextual Gadgets. Each gadget consists
+of a gadget spec, a manifest (for the Marketplace), and bits of CSS, served from
+the respective static directories. 
+
+See http://www.pipetree.com/qmacro/blog/2010/06/getting-started-with-gmail-contextual-gadgets/ for more info.
