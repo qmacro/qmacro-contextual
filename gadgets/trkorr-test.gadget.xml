@@ -47,10 +47,6 @@
         // Only do something if we actually have a subject to work with
         if (subject) {
 
-          var params = {};
-          params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
-          params[gadgets.io.RequestParameters.AUTHORIZATION] = gadgets.io.AuthorizationType.SIGNED;
-
           console.log('Processing subject: ' + subject);
 
           // Pick out the TRKORRs and process them
