@@ -44,7 +44,7 @@
 
           var conference = new Date(2011, 04, 10);
           var today = new Date();
-          var daysToGo = Math.ceil((conference - today) / (1000 * 60 * 60 * 24));
+          var daysToGo = Math.floor((conference - today) / (1000 * 60 * 60 * 24));
           var msg = "<p class='countdown'>" + daysToGo + " days to go until <a href='http://www.google.com/events/io/2011/sessions.html'>Google I/O 2011</a>!</p>";
           
           $('head').append('<link rel="stylesheet" href="http://qmacro-contextual.appspot.com/css/google-io-2011-countdown.css" />');
