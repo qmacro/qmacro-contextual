@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <ModulePrefs title="Google I/O Countdown"
+    description="Google I/O Countdown Gadget"
+    height="50"
+    author="DJ Adams"
+    author_email="dj.adams@pobox.com"
+    author_location="Manchester">
+
+    <!-- Declare feature dependencies. -->
+
+    <!-- This one is not specific to Gmail contextual gadgets. -->
+    <Require feature="dynamic-height"/>
+
+    <!-- The next feature, Caja, is optional, and is supported for
+     use only within test domains. Uncomment the tag only for
+     non-production gadgets. -->
+    <!-- <Require feature="caja"/> -->
+
+    <!-- The next feature, google.contentmatch, is required for all
+     Gmail contextual gadgets.
+     <Param> - specify one or more comma-separated extractor IDs in
+     a param named "extractors". This line is overridden by the extractor ID
+     in the manifest, but is still expected to be present. -->
+    <Require feature="google.contentmatch">
+      <Param name="extractors">
+        google.com:SubjectExtractor
+      </Param>
+    </Require>
+
+  </ModulePrefs>
+
+  <!-- Define the content type and display location. The settings
+   "html" and "card" are required for all Gmail contextual gadgets. -->
+  <Content type="html" view="card">
+    <![CDATA[
+      <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>
+      <script type="text/javascript">
+
+        $(document).ready(function() {
+
+          matches = google.contentmatch.getContentMatches();
+          console.log(JSON.stringify(matches));
+
+          var conference = new Date(2011, 04, 10);
+          var today = new Date();
+          var daysToGo = Math.ceil((conference - today) / (1000 * 60 * 60 * 24));
+          
+          $('head').append('<link rel="stylesheet" href="http://qmacro-contextual.appspot.com/css/twitter-user-info.css" />');
+          $(daysToGo + " days to go until <a href='http://www.google.com/events/io/2011/sessions.html'>Google I/O 2011</a>!").appendTo('body');
+          gadgets.window.adjustHeight(100);
+        });
+          
+      </script>
+    ]]>
+  </Content>
+</Module>
+
