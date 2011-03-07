@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ApplicationManifest xmlns="http://schemas.google.com/ApplicationManifest/2009">
+
+  <!-- Support info to show in the marketplace & control panel -->
+  <Support>
+    <!-- URL for application configuration, accessed from the app settings
+     page in the control panel -->
+    <Link rel="manage" href="http://qmacro-contextual.appspot.com/mangtug/admin?domain=${DOMAIN_NAME}" />
+
+    <!-- URL explaining how customers get support. -->
+    <Link rel="support" href="http://qmacro-contextual.appspot.com/mangtug/support" />
+
+    <!-- URL that is displayed to admins during the deletion process,
+     to specify policies such as data retention, how to claim accounts, etc. -->
+    <Link rel="deletion-policy" href="http://qmacro-contextual.appspot.com/mangtug/deletion-policy" />
+  </Support>
+
+  <!-- Name and description pulled from message bundles -->
+  <Name>ManGTUG Demo Gadget</Name>
+  <Description>Simple Hello World for Manchester GTUG Demo</Description>
+
+  <!-- Declare our OpenID realm so our app is white listed -->
+  <Extension id="realm" type="openIdRealm">
+    <Url>http://qmacro-contextual.appspot.com</Url>
+  </Extension>
+
+<!-- EXTRACTOR -->
+<Extension id="SubjectExtractor" type="contextExtractor">
+  <Name>Hello World</Name>
+  <Url>google.com:SubjectExtractor</Url>
+  <Param name="subject" value=".*Hello.*"/>
+  <Triggers ref="MangtugGadget"/>
+  <Scope ref="emailSubject"/>
+  <Container name="mail"/>
+</Extension>
+
+<!-- GADGET -->
+<Extension id="MangtugGadget" type="gadget">
+  <Name>ManGtug contextual gadget</Name>
+  <Url>http://qmacro-contextual.appspot.com/gadgets/mangtug.gadget.xml</Url>
+  <Container name="mail"/>
+</Extension>
+
+<!-- SCOPE -->
+<Scope id="emailSubject">
+  <Url>tag:google.com,2010:auth/contextual/extractor/SUBJECT</Url>
+  <Reason>This application looks at the subject of each email looking for references to Google I/O</Reason>
+</Scope>
+
+</ApplicationManifest>
+
