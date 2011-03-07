@@ -16,7 +16,7 @@
   </Support>
 
   <!-- Name and description pulled from message bundles -->
-  <Name>Gmail Contextual Twitter User Info</Name>
+  <Name>Google I/O 2011 Countdown</Name>
   <Description>Simple Countdown to Google I/O 2011 for Manchester GTUG Demo</Description>
 
   <!-- Declare our OpenID realm so our app is white listed -->
@@ -28,7 +28,7 @@
 <Extension id="SubjectExtractor" type="contextExtractor">
   <Name>Google I/O references in Subject</Name>
   <Url>google.com:SubjectExtractor</Url>
-  <Param name="subject" value=".*[Gg]oogle\s+I/O.*"/>
+  <Param name="subject" value=".*Google.*"/>
   <Triggers ref="GoogleIOCountdownGadget"/>
   <Scope ref="emailSubject"/>
   <Container name="mail"/>

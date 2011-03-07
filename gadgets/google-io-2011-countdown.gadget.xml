@@ -46,7 +46,7 @@
           var today = new Date();
           var daysToGo = Math.ceil((conference - today) / (1000 * 60 * 60 * 24));
           
-          $('head').append('<link rel="stylesheet" href="http://qmacro-contextual.appspot.com/css/twitter-user-info.css" />');
+          $('head').append('<link rel="stylesheet" href="http://qmacro-contextual.appspot.com/css/google-io-2011-countdown.css" />');
           $(daysToGo + " days to go until <a href='http://www.google.com/events/io/2011/sessions.html'>Google I/O 2011</a>!").appendTo('body');
           gadgets.window.adjustHeight(100);
         });
